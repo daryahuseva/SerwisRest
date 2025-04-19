@@ -1,0 +1,15 @@
+---
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:h2:./notedb # URL для подключения к H2 с сохранением данных в файле notedb.mv.db в корневой директории проекта
+    driver-class-name: org.h2.Driver
+    username: sa # Имя пользователя по умолчанию для H2
+    password:  # Пароль по умолчанию для H2 - пустая строка
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update # Hibernate автоматически обновит схему базы данных при запуске приложения
+    show-sql: true # Выводить SQL-запросы в консоль (полезно для отладки)
