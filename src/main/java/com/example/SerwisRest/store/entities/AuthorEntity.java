@@ -3,14 +3,18 @@ package com.example.SerwisRest.store.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
-import jakarta.validation.constraints.NotBlank;
+//import jakarta.validation.constraints.NotBlank;
 
+import java.util.ArrayList;
 import java.util.List;
 
+@Builder
 @Getter
 @Setter
 @Entity
 @Table(name = "author")
+@NoArgsConstructor
+@AllArgsConstructor
 public class AuthorEntity {
 
     @Id
@@ -18,16 +22,24 @@ public class AuthorEntity {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @NotBlank(message = "Obowiazkowe")
+  //  @NotBlank(message = "Obowiazkowe")
     private String name;
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private List<NoteEntity> notes = new ArrayList<>();
 
-    private List<NoteEntity> notes;
-
-
-    public AuthorEntity() {
-
+    public Long getId() {
+        return id;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<NoteEntity> getNotes() {
+        return notes;
+    }
+
 }
 

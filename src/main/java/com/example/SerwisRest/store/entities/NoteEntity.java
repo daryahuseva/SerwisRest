@@ -3,14 +3,15 @@ package com.example.SerwisRest.store.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
-import jakarta.validation.constraints.NotBlank;
-import org.hibernate.annotations.CreationTimestamp;
+//import jakarta.validation.constraints.NotBlank;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
+@Builder
 @Getter
 @Setter
-@Entity@NoArgsConstructor
+@Entity
+@NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "note")
 public class NoteEntity {
@@ -20,13 +21,13 @@ public class NoteEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY) //sequence
     private Long id;
 
-    @NotBlank(message = "Obowiazkowe")
+  //  @NotBlank(message = "Obowiazkowe")
     private String title;
 
     private String content;
 
-    @CreationTimestamp
-    private LocalDateTime createdAt;
+    @Builder.Default
+    private Instant createdAt = Instant.now();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id", nullable = false)
