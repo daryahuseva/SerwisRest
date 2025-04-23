@@ -25,17 +25,23 @@ public class CustomErrorController implements ErrorController {
   @RequestMapping(CustomErrorController.PATH)
   public ResponseEntity<ErrorDto> error(WebRequest webRequest) {
 
+
     Map<String, Object> attributes = errorAttributes.getErrorAttributes(
             webRequest,
             ErrorAttributeOptions.of(ErrorAttributeOptions.Include.EXCEPTION, ErrorAttributeOptions.Include.MESSAGE)
     );
 
+    Integer status = (Integer) attributes.get("status");
+    if (status == null) {
+      status = 500;
+    }
+
     return ResponseEntity
-            .status((Integer) attributes.get("status"))
+            .status(status)
             .body(ErrorDto
                     .builder()
-                    .error((String) attributes.get("error"))
-                    .errorDescription((String) attributes.get("message"))
+                    .error((String) attributes.getOrDefault("error", "Unknown Error"))
+                    .errorDescription((String) attributes.getOrDefault("message", "No error description available"))
                     .build()
             );
   }
